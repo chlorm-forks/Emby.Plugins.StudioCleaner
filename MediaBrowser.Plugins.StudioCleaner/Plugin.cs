@@ -6,18 +6,36 @@ using MediaBrowser.Model.Plugins;
 using MediaBrowser.Model.Serialization;
 using MediaBrowser.Plugins.StudioCleaner.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace MediaBrowser.Plugins.StudioCleaner
 {
     /// <summary>
     /// Class Plugin
     /// </summary>
-    public class Plugin : BasePlugin<PluginConfiguration>
+    public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
     {
         public Plugin(IApplicationPaths applicationPaths, IXmlSerializer xmlSerializer)
             : base(applicationPaths, xmlSerializer)
         {
             Instance = this;
+        }
+
+        public IEnumerable<PluginPageInfo> GetPages()
+        {
+            return new[]
+            {
+                new PluginPageInfo
+                {
+                    Name = "StudioCleaner",
+                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.configPage.html"
+                },
+                new PluginPageInfo
+                {
+                    Name = "studioOptions",
+                    EmbeddedResourcePath = GetType().Namespace + ".Configuration.studioOptionsPage.html"
+                }
+            };
         }
 
         /// <summary>
