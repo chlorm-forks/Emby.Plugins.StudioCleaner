@@ -32,7 +32,7 @@ namespace MediaBrowser.Plugins.StudioCleaner
                 },
                 new PluginPageInfo
                 {
-                    Name = "studioOptions",
+                    Name = "StudioCleanerOptions",
                     EmbeddedResourcePath = GetType().Namespace + ".Configuration.studioOptionsPage.html"
                 }
             };
