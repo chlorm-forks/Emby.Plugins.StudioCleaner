@@ -13,7 +13,17 @@
                     <h1>Studio Cleaner</h1>
                     <p>Configure Studio Cleaner for media type:</p>
                     <div class="itemTypes paperList"></div>
-                </div>
+
+                    <br />
+                    <p style="color: green;">Once you have configured all your studios, the next library scan will run the StudioCleaner against all your items.</p>
+                    <button is="emby-button" type="button" class="raised button-cancel block" onclick="StudioCleanerConfigurationPage.refreshLibrary();">
+                        <span>Start Library Scan</span>
+                    </button>
+                    <h2>
+                        This plug-in modifies your metadata.
+                    </h2>
+                    <p>It will alter the values of your studio tags. It will also alter saved metadata files if you have the option to save metadata with the media items enabled.</p>
+               </div>
             </div>
 
             <script type="text/javascript">
@@ -32,7 +42,7 @@
                         return elem;
                     }
 
-                    var StudioCleanerConfigurationPage = {
+                    window.StudioCleanerConfigurationPage = {
                         pluginUniqueId: "AB95885A-1D0E-445E-BDBF-80C1912C98C5",
 
                         loadTypes: function (types, page) {
@@ -52,6 +62,16 @@
                                 return html;
 
                             }).join(''));
+                        },
+
+                        refreshLibrary: function () {
+                            ApiClient.ajax({
+                                type: "POST",
+                                url: ApiClient.getUrl("Library/Refresh")
+                            }).then(function () {
+
+                                Dashboard.alert("Library Scan Started");
+                            });
                         }
                     };
 
